@@ -18,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+				display: ['Unbounded', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,7 +65,27 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				voice: {
+					primary: 'hsl(var(--voice-primary))',
+					secondary: 'hsl(var(--voice-secondary))',
+					navy: 'hsl(var(--voice-navy))',
+					'navy-light': 'hsl(var(--voice-navy-light))',
+					text: 'hsl(var(--voice-text))',
+					'text-muted': 'hsl(var(--voice-text-muted))',
+					border: 'hsl(var(--voice-border))'
 				}
+			},
+			backgroundImage: {
+				'gradient-voice': 'var(--gradient-voice)',
+				'gradient-voice-subtle': 'var(--gradient-voice-subtle)',
+			},
+			boxShadow: {
+				'voice-glow': 'var(--glow-voice)',
+				'voice': 'var(--shadow-voice)',
+			},
+			transitionTimingFunction: {
+				'voice': 'cubic-bezier(0.4, 0, 0.2, 1)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +108,49 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'voice-pulse': {
+					'0%, 100%': {
+						transform: 'scale(1)',
+						opacity: '1'
+					},
+					'50%': {
+						transform: 'scale(1.05)',
+						opacity: '0.8'
+					}
+				},
+				'voice-glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 20px hsl(var(--voice-primary) / 0.3)'
+					},
+					'50%': {
+						boxShadow: '0 0 40px hsl(var(--voice-primary) / 0.6)'
+					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-10px)'
+					}
+				},
+				'gradient-shift': {
+					'0%, 100%': {
+						backgroundPosition: '0% 50%'
+					},
+					'50%': {
+						backgroundPosition: '100% 50%'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'voice-pulse': 'voice-pulse 2s ease-in-out infinite',
+				'voice-glow': 'voice-glow 2s ease-in-out infinite',
+				'float': 'float 3s ease-in-out infinite',
+				'gradient-shift': 'gradient-shift 3s ease infinite'
 			}
 		}
 	},

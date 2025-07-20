@@ -8,51 +8,65 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Voice Dating App Theme - Dark Navy, Lavender, Neon Pink */
+    --background: 231 20% 8%;
+    --foreground: 231 15% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 231 18% 12%;
+    --card-foreground: 231 15% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 231 18% 12%;
+    --popover-foreground: 231 15% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 328 100% 68%;
+    --primary-foreground: 231 20% 8%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 258 85% 75%;
+    --secondary-foreground: 231 20% 8%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 231 15% 15%;
+    --muted-foreground: 231 10% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 258 85% 75%;
+    --accent-foreground: 231 20% 8%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 231 15% 95%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 231 15% 20%;
+    --input: 231 15% 15%;
+    --ring: 328 100% 68%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Voice-specific design tokens */
+    --voice-primary: 328 100% 68%;
+    --voice-secondary: 258 85% 75%;
+    --voice-navy: 231 20% 8%;
+    --voice-navy-light: 231 18% 12%;
+    --voice-text: 231 15% 95%;
+    --voice-text-muted: 231 10% 60%;
+    --voice-border: 231 15% 20%;
+    
+    /* Gradients */
+    --gradient-voice: linear-gradient(135deg, hsl(var(--voice-primary)), hsl(var(--voice-secondary)));
+    --gradient-voice-subtle: linear-gradient(180deg, hsl(var(--voice-navy)) 0%, hsl(var(--voice-navy-light)) 100%);
+    
+    /* Shadows and glows */
+    --glow-voice: 0 0 40px hsl(var(--voice-primary) / 0.3);
+    --shadow-voice: 0 10px 30px -10px hsl(var(--voice-primary) / 0.2);
+    
+    /* Animations */
+    --transition-voice: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 231 18% 12%;
+    --sidebar-foreground: 231 15% 95%;
+    --sidebar-primary: 328 100% 68%;
+    --sidebar-primary-foreground: 231 20% 8%;
+    --sidebar-accent: 231 15% 15%;
+    --sidebar-accent-foreground: 231 15% 95%;
+    --sidebar-border: 231 15% 20%;
+    --sidebar-ring: 328 100% 68%;
   }
 
   .dark {
@@ -101,5 +115,15 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .bg-300% {
+    background-size: 300% 300%;
+  }
+  
+  .voice-glow {
+    filter: drop-shadow(0 0 20px hsl(var(--voice-primary) / 0.4));
   }
 }
