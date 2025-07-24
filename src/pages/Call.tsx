@@ -10,8 +10,9 @@ const Call = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
+  const [searchingForGender] = useState("female"); // This would come from user preferences
   const [partner] = useState({
-    name: "Анна",
+    name: searchingForGender === "female" ? "Анна" : "Александр",
     age: 24,
     interests: ["Музыка", "Путешествия", "Кино"]
   });
@@ -59,7 +60,7 @@ const Call = () => {
           <CardContent className="pt-6">
             <div className="space-y-6">
               <div className="w-32 h-32 mx-auto bg-gradient-voice rounded-full flex items-center justify-center text-6xl animate-pulse">
-                🎤
+                {searchingForGender === "female" ? "👨" : "👩"}
               </div>
               <div>
                 <h2 className="text-2xl font-display bg-gradient-voice bg-clip-text text-transparent mb-2">
@@ -93,7 +94,7 @@ const Call = () => {
             {/* Partner Info */}
             <div className="space-y-4">
               <div className="w-24 h-24 mx-auto bg-gradient-voice rounded-full flex items-center justify-center text-4xl">
-                👤
+                {searchingForGender === "female" ? "👩" : "👨"}
               </div>
               <div>
                 <h2 className="text-xl font-display">{partner.name}, {partner.age}</h2>

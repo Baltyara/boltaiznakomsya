@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -11,7 +12,8 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    gender: ""
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -77,6 +79,24 @@ const Register = () => {
                 onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
                 required
               />
+            </div>
+            <div className="space-y-3">
+              <Label>Пол</Label>
+              <RadioGroup
+                value={formData.gender}
+                onValueChange={(value) => setFormData({...formData, gender: value})}
+                className="flex gap-6"
+                required
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="male" id="male" />
+                  <Label htmlFor="male">Мужской</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="female" id="female" />
+                  <Label htmlFor="female">Женский</Label>
+                </div>
+              </RadioGroup>
             </div>
             <Button type="submit" className="w-full" variant="voice">
               Зарегистрироваться
