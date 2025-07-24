@@ -2,8 +2,15 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Mic, Heart, Users, Shield, Timer, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
+  const handleStartCall = () => {
+    navigate('/register');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-voice-subtle">
       {/* Hero Section */}
@@ -32,7 +39,7 @@ const LandingPage = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button variant="voice" size="lg" className="group">
+              <Button variant="voice" size="lg" className="group" onClick={handleStartCall}>
                 <Mic className="mr-2 h-5 w-5 group-hover:animate-voice-pulse" />
                 Начать звонок
               </Button>
@@ -248,7 +255,7 @@ const LandingPage = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button variant="voice" size="lg" className="group">
+            <Button variant="voice" size="lg" className="group" onClick={handleStartCall}>
               <Mic className="mr-2 h-5 w-5 group-hover:animate-voice-pulse" />
               Попробовать бесплатно
             </Button>
