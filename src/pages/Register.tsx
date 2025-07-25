@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import SocialLogin from "@/components/SocialLogin";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -102,10 +103,15 @@ const Register = () => {
               Зарегистрироваться
             </Button>
           </form>
+          
+          <div className="mt-6">
+            <SocialLogin mode="register" />
+          </div>
+          
           <div className="mt-4 text-center">
             <p className="text-sm text-muted-foreground">
               Уже есть аккаунт?{" "}
-              <Link to="/" className="text-primary hover:underline">
+              <Link to="/login" className="text-primary hover:underline">
                 Войти
               </Link>
             </p>
