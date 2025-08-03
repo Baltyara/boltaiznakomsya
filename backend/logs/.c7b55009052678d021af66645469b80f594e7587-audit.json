@@ -1,0 +1,25 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 7
+    },
+    "auditLog": "C:\\Users\\balty\\Desktop\\111\\boltaiznakomsya\\backend\\logs\\.c7b55009052678d021af66645469b80f594e7587-audit.json",
+    "files": [
+        {
+            "date": 1753899415060,
+            "name": "C:\\Users\\balty\\Desktop\\111\\boltaiznakomsya\\backend\\logs\\debug-2025-07-30.log",
+            "hash": "3070bba5af1b0ead0241d54fa831c6f0e6736d5a3c2a7b3921881505938a36c8"
+        },
+        {
+            "date": 1753905598448,
+            "name": "C:\\Users\\balty\\Desktop\\111\\boltaiznakomsya\\backend\\logs\\debug-2025-07-31.log",
+            "hash": "4b873cd00d7c19108168055ca3949395e81f21bd588fbc4f22e540f058ee1f48"
+        },
+        {
+            "date": 1754241445512,
+            "name": "C:\\Users\\balty\\Desktop\\111\\boltaiznakomsya\\backend\\logs\\debug-2025-08-03.log",
+            "hash": "87584a9f148bd93f6badf05dfedd3518b5008d48106b33d7d6c9aa51b23a5f9e"
+        }
+    ],
+    "hashType": "sha256"
+}

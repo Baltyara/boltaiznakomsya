@@ -1,0 +1,142 @@
+groups:
+  - name: boltaiznakomsya-alerts
+    rules:
+      # Высокое время ответа HTTP
+      - alert: HighHTTPResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокое время ответа HTTP"
+          description: "95-й перцентиль времени ответа HTTP превышает 2 секунды"
+
+      # Высокая частота ошибок
+      - alert: HighErrorRate
+        expr: rate(errors_total[5m]) > 0.1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Высокая частота ошибок"
+          description: "Частота ошибок превышает 0.1 в секунду"
+
+      # Высокое использование памяти
+      - alert: HighMemoryUsage
+        expr: memory_usage_bytes{type="heap"} > 500000000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокое использование памяти"
+          description: "Использование heap памяти превышает 500MB"
+
+      # Высокое использование CPU
+      - alert: HighCPUUsage
+        expr: cpu_usage_percent > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокое использование CPU"
+          description: "Использование CPU превышает 80%"
+
+      # Много активных WebSocket соединений
+      - alert: HighWebSocketConnections
+        expr: websocket_connections_active > 1000
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Много активных WebSocket соединений"
+          description: "Количество активных WebSocket соединений превышает 1000"
+
+      # Много активных звонков
+      - alert: HighActiveCalls
+        expr: active_calls_total > 200
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Много активных звонков"
+          description: "Количество активных звонков превышает 200"
+
+      # Высокая частота неудачных попыток аутентификации
+      - alert: HighAuthFailureRate
+        expr: rate(auth_attempts_total{status="failure"}[5m]) > 0.5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокая частота неудачных попыток аутентификации"
+          description: "Возможная атака брутфорс или проблемы с аутентификацией"
+
+      # Высокая частота жалоб
+      - alert: HighUserReportsRate
+        expr: rate(user_reports_total[5m]) > 0.2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокая частота жалоб на пользователей"
+          description: "Возможные проблемы с модерацией или спам"
+
+      # Сервис недоступен
+      - alert: ServiceDown
+        expr: up{job="boltaiznakomsya-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Сервис недоступен"
+          description: "API сервис Болтай и Знакомься недоступен"
+
+      # Медленные запросы к базе данных
+      - alert: SlowDatabaseQueries
+        expr: histogram_quantile(0.95, rate(db_query_duration_seconds_bucket[5m])) > 1
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Медленные запросы к базе данных"
+          description: "95-й перцентиль времени запросов к БД превышает 1 секунду"
+
+      # Высокая частота HTTP ошибок 5xx
+      - alert: HighHTTP5xxRate
+        expr: rate(http_requests_total{status_code=~"5.."}[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Высокая частота HTTP ошибок 5xx"
+          description: "Частота серверных ошибок превышает 0.1 в секунду"
+
+      # Высокая частота HTTP ошибок 4xx
+      - alert: HighHTTP4xxRate
+        expr: rate(http_requests_total{status_code=~"4.."}[5m]) > 1
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокая частота HTTP ошибок 4xx"
+          description: "Частота клиентских ошибок превышает 1 в секунду"
+
+      # Низкая частота успешных регистраций
+      - alert: LowRegistrationSuccessRate
+        expr: rate(user_registrations_total{status="success"}[5m]) < 0.01
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Низкая частота успешных регистраций"
+          description: "Возможные проблемы с процессом регистрации"
+
+      # Высокая частота отключений WebSocket
+      - alert: HighWebSocketDisconnections
+        expr: rate(websocket_connections_total{status="disconnected"}[5m]) > 10
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокая частота отключений WebSocket"
+          description: "Возможные проблемы с сетевым соединением или стабильностью" 

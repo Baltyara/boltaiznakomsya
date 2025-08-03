@@ -1,73 +1,176 @@
-# Welcome to your Lovable project
+# 🎤 Болтай и Знакомься
 
-## Project info
+Голосовое приложение для знакомств с 5-минутными звонками.
 
-**URL**: https://lovable.dev/projects/6e16e3c1-0d46-46a3-a43e-3f77b49be28a
+## 🚀 Быстрый старт
 
-## How can I edit this code?
+### Вариант 1: Автоматический запуск (Windows)
+```bash
+start-dev.bat
+```
 
-There are several ways of editing your application.
+### Вариант 2: Ручной запуск
 
-**Use Lovable**
+#### 1. Установка зависимостей
+```bash
+# Frontend
+npm install
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6e16e3c1-0d46-46a3-a43e-3f77b49be28a) and start prompting.
+# Backend
+cd backend
+npm install
+cd ..
+```
 
-Changes made via Lovable will be committed automatically to this repo.
+#### 2. Настройка базы данных
+```bash
+# Установите PostgreSQL и Redis
+# Создайте базу данных
+createdb boltaiznakomsya
 
-**Use your preferred IDE**
+# Запустите SQL скрипт
+psql -d boltaiznakomsya -f backend/database.sql
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+#### 3. Настройка переменных окружения
+```bash
+# Frontend
+cp env.example .env
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# Backend
+cd backend
+cp env.example .env
+cd ..
+```
 
-Follow these steps:
+#### 4. Запуск приложения
+```bash
+# Terminal 1: Backend
+cd backend
+npm run dev
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Terminal 2: Frontend
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### 🌐 Доступные URL
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:3001
+- **Health Check**: http://localhost:3001/health
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📁 Структура проекта
 
-**Use GitHub Codespaces**
+```
+boltaiznakomsya/
+├── src/                    # Frontend (React + TypeScript)
+│   ├── components/         # UI компоненты
+│   ├── contexts/          # React Context
+│   ├── pages/             # Страницы приложения
+│   └── services/          # API и WebSocket сервисы
+├── backend/               # Backend (Node.js + Express)
+│   ├── src/
+│   │   ├── controllers/   # Контроллеры API
+│   │   ├── models/        # Модели базы данных
+│   │   ├── routes/        # Маршруты API
+│   │   └── middleware/    # Middleware
+│   └── database.sql       # SQL скрипты
+└── README.md
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🛠 Технологии
 
-## What technologies are used for this project?
-
-This project is built with:
-
+### Frontend
+- React 18 + TypeScript
 - Vite
-- TypeScript
-- React
-- shadcn-ui
 - Tailwind CSS
+- Shadcn/ui
+- React Router DOM
+- Socket.io Client
 
-## How can I deploy this project?
+### Backend
+- Node.js + Express
+- PostgreSQL
+- Redis
+- Socket.io
+- JWT Authentication
+- bcryptjs
 
-Simply open [Lovable](https://lovable.dev/projects/6e16e3c1-0d46-46a3-a43e-3f77b49be28a) and click on Share -> Publish.
+## 📚 Документация
 
-## Can I connect a custom domain to my Lovable project?
+- [API Documentation](backend/README.md)
+- [Architecture](ARCHITECTURE.md)
+- [Implementation Plan](IMPLEMENTATION_PLAN.md)
+- [Functions](FUNCTIONS.md)
+- [Changelog](CHANGELOG.md)
 
-Yes, you can!
+## 🎯 Основные функции
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- ✅ Регистрация и аутентификация пользователей
+- ✅ Создание и редактирование профиля
+- ✅ Система матчмейкинга по интересам
+- ✅ Голосовые звонки с WebRTC
+- ✅ Система оценок и обратной связи
+- ✅ Real-time коммуникация через WebSocket
+- ✅ Полноценный REST API
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🔧 Разработка
+
+### Требования
+- Node.js 18+
+- PostgreSQL 12+
+- Redis 6+
+
+### Команды разработки
+```bash
+# Frontend
+npm run dev          # Запуск в режиме разработки
+npm run build        # Сборка для продакшена
+npm run lint         # Проверка кода
+
+# Backend
+cd backend
+npm run dev          # Запуск в режиме разработки
+npm run start        # Запуск в продакшене
+npm run test         # Запуск тестов
+```
+
+## 🌐 Продакшн развертывание
+
+**Сервер**: 188.225.45.8  
+**Домен**: boltaiznakomsya.ru
+
+### Быстрый запуск:
+```bash
+# В WSL Ubuntu
+cd /mnt/c/Users/balty/Desktop/111/boltaiznakomsya
+chmod +x scripts/deploy-production.sh
+./scripts/deploy-production.sh
+```
+
+📋 **Подробные инструкции**: [DEPLOY-NOW.md](./DEPLOY-NOW.md)
+
+### Поддомены:
+- `boltaiznakomsya.ru` - Основное приложение
+- `api.boltaiznakomsya.ru` - Backend API  
+- `admin.boltaiznakomsya.ru` - Админ панель
+- `static.boltaiznakomsya.ru` - Статические файлы
+- `monitor.boltaiznakomsya.ru` - Мониторинг
+
+## 📊 Статус проекта
+
+- **Frontend**: ✅ Готов
+- **Backend API**: ✅ Готов
+- **Интеграция**: ✅ Готов
+- **Тестирование**: ✅ 48% тестов проходят
+- **Продакшн**: 🚀 Готов к развертыванию!
+
+## 🤝 Вклад в проект
+
+1. Форкните репозиторий
+2. Создайте ветку для новой функции
+3. Внесите изменения
+4. Создайте Pull Request
+
+## 📄 Лицензия
+
+MIT License
