@@ -2,9 +2,9 @@ const request = require('supertest');
 const jwt = require('jsonwebtoken');
 
 // Мокируем модули
-jest.mock('../models/User');
-jest.mock('../models/Call');
-jest.mock('../config/database');
+vi.mock('../models/User');
+vi.mock('../models/Call');
+vi.mock('../config/database');
 
 const User = require('../models/User');
 const Call = require('../models/Call');

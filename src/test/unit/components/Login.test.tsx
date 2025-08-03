@@ -9,7 +9,6 @@ import Login from '@/pages/Login';
 const mockUseAuth = vi.fn();
 vi.mock('@/contexts/AuthContext', () => ({
   useAuth: () => mockUseAuth(),
-  AuthProvider: ({ children }: { children: React.ReactNode }) => React.createElement('div', {}, children),
 }));
 
 // Mock useNavigate

@@ -1,5 +1,26 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
+
+// Mock translations
+const mockTranslations = {
+  ru: {
+    welcome: 'Добро пожаловать',
+    login: 'Войти',
+    register: 'Регистрация',
+    test: 'Тест'
+  },
+  en: {
+    welcome: 'Welcome',
+    login: 'Login',
+    register: 'Register',
+    test: 'Test'
+  }
+};
+
+vi.mock('@/locales/translations', () => ({
+  default: mockTranslations
+}));
+
 import { useLocalization } from '@/hooks/useLocalization';
 
 // Mock localStorage

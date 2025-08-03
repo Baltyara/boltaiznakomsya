@@ -123,6 +123,12 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+// Mock window.navigator.standalone
+Object.defineProperty(window.navigator, 'standalone', {
+  writable: true,
+  value: false,
+});
+
 // Mock gtag
 global.gtag = vi.fn();
 

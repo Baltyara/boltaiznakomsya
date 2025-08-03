@@ -63,6 +63,12 @@ describe('useAnalytics Hook', () => {
       ok: true,
       json: () => Promise.resolve({ success: true })
     });
+    
+    // Мокаем localStorage.getItem для токена
+    mockLocalStorage.getItem.mockImplementation((key: string) => {
+      if (key === 'token') return 'mock-token';
+      return null;
+    });
   });
 
   it('returns analytics functions and state', () => {

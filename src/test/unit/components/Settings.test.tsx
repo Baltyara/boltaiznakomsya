@@ -293,3 +293,4 @@ describe('Settings Component', () => {
     // Проверяем, что компонент не падает с пустыми данными
     expect(screen.getByText('Настройки')).toBeInTheDocument();
   });
+});

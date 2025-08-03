@@ -1,5 +1,3 @@
-import { renderHook, act } from '@testing-library/react';
-
 // Mock Socket.IO
 const mockSocket = {
   connect: vi.fn(),
@@ -27,6 +25,7 @@ vi.mock('@/contexts/AuthContext', () => ({
   }),
 }));
 
+import { renderHook, act } from '@testing-library/react';
 import { useSocket } from '@/hooks/useSocket';
 
 describe('useSocket', () => {

@@ -93,6 +93,21 @@ const Register = () => {
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
     }
+    
+    // Валидируем поле при изменении
+    if (field === 'email' && value) {
+      if (!/\S+@\S+\.\S+/.test(value as string)) {
+        setErrors(prev => ({ ...prev, email: "Введите корректный email" }));
+      }
+    } else if (field === 'password' && value) {
+      if ((value as string).length < 6) {
+        setErrors(prev => ({ ...prev, password: "Пароль должен содержать минимум 6 символов" }));
+      }
+    } else if (field === 'confirmPassword' && value) {
+      if (value !== formData.password) {
+        setErrors(prev => ({ ...prev, confirmPassword: "Пароли не совпадают" }));
+      }
+    }
   };
 
   return (

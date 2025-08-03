@@ -593,6 +593,7 @@ export const useLocalization = (): LocalizationContextType => {
 
   // Функция перевода
   const t = useCallback((key: string, params?: Record<string, string | number>): string => {
+    if (!key) return '';
     const keys = key.split('.');
     let value: any = translations[language];
     
