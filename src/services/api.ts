@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://188.225.45.8/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 interface ApiResponse<T> {
   data?: T;
@@ -60,12 +60,16 @@ class ApiService {
   ): Promise<ApiResponse<T>> {
     try {
       const url = `${API_BASE_URL}${endpoint}`;
+      console.log('API: Making request to:', url, 'with options:', options);
+      
       const response = await fetch(url, {
         ...options,
         headers: this.getAuthHeaders(),
       });
 
+      console.log('API: Response status:', response.status);
       const data = await response.json();
+      console.log('API: Response data:', data);
 
       if (!response.ok) {
         throw new Error(data.error || 'API request failed');
@@ -73,6 +77,7 @@ class ApiService {
 
       return { data };
     } catch (error) {
+      console.error('API: Request failed:', error);
       return { error: error instanceof Error ? error.message : 'Unknown error' };
     }
   }
@@ -82,10 +87,13 @@ class ApiService {
     email: string;
     password: string;
   }): Promise<ApiResponse<AuthResponse>> {
-    return this.request<AuthResponse>('/auth/register', {
+    console.log('API: Registering user with:', userData);
+    const result = await this.request<AuthResponse>('/auth/register', {
       method: 'POST',
       body: JSON.stringify(userData),
     });
+    console.log('API: Register result:', result);
+    return result;
   }
 
   async login(credentials: { email: string; password: string }): Promise<ApiResponse<AuthResponse>> {

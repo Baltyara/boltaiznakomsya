@@ -67,7 +67,7 @@ describe('Register Component', () => {
     await waitFor(() => {
       expect(screen.getByText('Email обязателен')).toBeInTheDocument();
       expect(screen.getByText('Пароль обязателен')).toBeInTheDocument();
-      expect(screen.getByText('Подтвердите пароль')).toBeInTheDocument();
+      expect(screen.getAllByText('Подтвердите пароль')).toHaveLength(2); // label + error
       expect(screen.getByText('Необходимо согласие с условиями')).toBeInTheDocument();
     });
   });

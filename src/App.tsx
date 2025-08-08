@@ -8,6 +8,7 @@ import { CallProvider } from "@/contexts/CallContext";
 import Index from "./pages/Index";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
 import HowItWorks from "./pages/HowItWorks";
 import NotFound from "./pages/NotFound";
 import GlobalAuthError from "./components/GlobalAuthError";
@@ -35,6 +36,7 @@ const App = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/onboarding" element={
                   <ProtectedRoute>

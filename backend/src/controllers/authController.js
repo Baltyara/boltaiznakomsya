@@ -301,21 +301,17 @@ const reportUser = async (req, res) => {
     const { reason, description } = req.body;
     const reporterId = req.user.id;
 
-    reqLogger.info('User report attempt', { 
-      reporterId, 
-      reportedUserId: userId, 
-      reason 
-    });
+    reqLogger.info('User report attempt', { reporterId, reportedUserId: userId });
 
     // Check if user is trying to report themselves
-    if (userId === reporterId) {
-      reqLogger.warn('User tried to report themselves', { userId });
+    if (reporterId === userId) {
+      reqLogger.warn('User tried to report themselves', { userId: reporterId });
       return res.status(400).json({
         error: 'Нельзя пожаловаться на самого себя'
       });
     }
 
-    // Check if reported user exists
+    // Check if user exists
     const reportedUser = await User.findById(userId);
     if (!reportedUser) {
       reqLogger.warn('Report failed - reported user not found', { reportedUserId: userId });
@@ -324,53 +320,90 @@ const reportUser = async (req, res) => {
       });
     }
 
-    // Check if user already reported this user
+    // Check if already reported
     const existingReport = await User.findReport(reporterId, userId);
     if (existingReport) {
-      reqLogger.warn('User already reported this user', { 
-        reporterId, 
-        reportedUserId: userId 
-      });
+      reqLogger.warn('User already reported', { reporterId, reportedUserId: userId });
       return res.status(400).json({
         error: 'Вы уже жаловались на этого пользователя'
       });
     }
 
     // Create report
-    const report = await User.createReport({
-      reporterId,
-      reportedUserId: userId,
-      reason,
-      description: description || ''
-    });
+    await User.createReport(reporterId, userId, reason, description);
 
-    reqLogger.info('User report created successfully', { 
-      reportId: report.id,
-      reporterId, 
-      reportedUserId: userId, 
-      reason 
-    });
-    
-    // Обновляем метрики
-    userReportsTotal.labels(reason).inc();
+    reqLogger.info('User reported successfully', { reporterId, reportedUserId: userId });
+    userReportsTotal.inc();
 
     res.status(201).json({
-      message: 'Жалоба успешно отправлена',
-      report: {
-        id: report.id,
-        reason: report.reason,
-        createdAt: report.created_at
-      }
+      message: 'Жалоба отправлена'
     });
   } catch (error) {
-    reqLogger.error('Report user error', { 
+    reqLogger.error('Report error', { 
       error: error.message, 
       stack: error.stack,
-      reporterId: req.user.id,
-      reportedUserId: req.params.userId
+      reporterId: req.user?.id,
+      reportedUserId: req.params.userId 
     });
+    
+    errorsTotal.labels('user_report', 'medium').inc();
+    
     res.status(500).json({
       error: 'Ошибка при отправке жалобы',
+      message: error.message
+    });
+  }
+};
+
+const forgotPassword = async (req, res) => {
+  const reqLogger = createRequestLogger(req);
+  
+  try {
+    const { email } = req.body;
+
+    reqLogger.info('Forgot password attempt', { email });
+
+    // Check if user exists
+    const user = await User.findByEmail(email);
+    if (!user) {
+      // Don't reveal if user exists or not for security
+      reqLogger.info('Forgot password - user not found (silent)', { email });
+      return res.status(200).json({
+        message: 'Если аккаунт с таким email существует, вы получите письмо с инструкциями'
+      });
+    }
+
+    // Generate reset token (expires in 1 hour)
+    const resetToken = require('crypto').randomBytes(32).toString('hex');
+    const resetTokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+    // Save reset token to database
+    await User.updateResetToken(user.id, resetToken, resetTokenExpiry);
+
+    // TODO: Send email with reset link
+    // For now, just log the token (in production, send email)
+    reqLogger.info('Password reset token generated', { 
+      userId: user.id, 
+      email,
+      resetToken: resetToken.substring(0, 8) + '...' // Log only first 8 chars for security
+    });
+
+    reqLogger.info('Forgot password email sent', { userId: user.id, email });
+
+    res.status(200).json({
+      message: 'Если аккаунт с таким email существует, вы получите письмо с инструкциями'
+    });
+  } catch (error) {
+    reqLogger.error('Forgot password error', { 
+      error: error.message, 
+      stack: error.stack,
+      email: req.body.email 
+    });
+    
+    errorsTotal.labels('auth', 'medium').inc();
+    
+    res.status(500).json({
+      error: 'Ошибка при восстановлении пароля',
       message: error.message
     });
   }
@@ -383,5 +416,6 @@ module.exports = {
   updateProfile,
   updatePreferences,
   deleteAccount,
-  reportUser
+  reportUser,
+  forgotPassword
 }; 

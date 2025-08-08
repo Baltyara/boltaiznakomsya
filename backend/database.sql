@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS users (
     about_me TEXT,
     looking_for VARCHAR(10) DEFAULT 'both' CHECK (looking_for IN ('male', 'female', 'both')),
     notification_settings JSONB DEFAULT '{}',
+    reset_token VARCHAR(255),
+    reset_token_expiry TIMESTAMP,
     is_online BOOLEAN DEFAULT false,
     last_seen TIMESTAMP DEFAULT NOW(),
     created_at TIMESTAMP DEFAULT NOW(),

@@ -229,6 +229,26 @@ class User {
       throw new Error(`Error getting user reports: ${error.message}`);
     }
   }
+
+  static async updateResetToken(userId, resetToken, resetTokenExpiry) {
+    try {
+      const query = `
+        UPDATE users 
+        SET reset_token = $2, 
+            reset_token_expiry = $3,
+            updated_at = NOW()
+        WHERE id = $1
+        RETURNING id, email
+      `;
+      
+      const values = [userId, resetToken, resetTokenExpiry];
+      
+      const result = await pool.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      throw new Error(`Error updating reset token: ${error.message}`);
+    }
+  }
 }
 
 module.exports = User; 

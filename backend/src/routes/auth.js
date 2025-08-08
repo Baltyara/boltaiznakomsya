@@ -12,7 +12,8 @@ const {
   getProfile,
   updateProfile,
   updatePreferences,
-  deleteAccount
+  deleteAccount,
+  forgotPassword
 } = require('../controllers/authController');
 
 /**
@@ -379,5 +380,50 @@ router.put('/preferences', auth, updatePreferences);
  *               $ref: '#/components/schemas/Error'
  */
 router.delete('/account', auth, deleteAccount);
+
+/**
+ * @swagger
+ * /api/auth/forgot-password:
+ *   post:
+ *     summary: Восстановление пароля
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: Email пользователя для восстановления пароля
+ *     responses:
+ *       200:
+ *         description: Инструкции отправлены на email
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Сообщение об отправке инструкций
+ *       400:
+ *         description: Ошибка валидации
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Внутренняя ошибка сервера
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.post('/forgot-password', forgotPassword);
 
 module.exports = router; 

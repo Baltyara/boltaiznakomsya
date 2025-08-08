@@ -109,24 +109,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = async (userData: { email: string; password: string }) => {
     try {
+      console.log('Starting registration with:', userData);
       setIsLoading(true);
       setError(null);
       
       const response = await apiService.register(userData);
+      console.log('Registration response:', response);
       
       if (response.error) {
+        console.error('Registration error:', response.error);
         throw new Error(response.error);
       }
       
       if (response.data?.token) {
+        console.log('Registration successful, setting token and user');
         localStorage.setItem('authToken', response.data.token);
         setUser(response.data.user);
         // Connect to WebSocket
         socketService.connect(response.data.token);
       } else {
+        console.error('No token in response');
         throw new Error('Не удалось получить токен авторизации');
       }
     } catch (err) {
+      console.error('Registration failed:', err);
       const errorMessage = err instanceof Error ? err.message : 'Ошибка регистрации';
       setError(errorMessage);
       throw err;
